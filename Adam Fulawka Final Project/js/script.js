@@ -30,7 +30,7 @@ let backgroundColor = "#87ceeb"
 const yellowEllipse = {
     x: undefined,
     y: -50,
-    size: 30,
+    size: 80,
     isActive: false,
     fearDistance: 300,
     velocity: {
@@ -96,7 +96,7 @@ const fly = {
     fearDistance: 150,
 
 };
-
+let BeeDropImage = undefined;
 let caughtFlyImage = undefined;
 let endingImage = undefined;
 let state = "title";
@@ -105,27 +105,27 @@ let flyCaughtImage = undefined;
 let level = "One"
 
 
-moveYellowEllipse();
-    drawYellowEllipse();
-    checkFrogYellowEllipseCollision();
+// moveYellowEllipse();
+//     drawYellowEllipse();
+//     checkFrogYellowEllipseCollision();
 
-    if (flyAnimation.isPlaying === true) {
-        flyAnimation.timePassed = millis() - flyAnimation.startTime;
-        if (flyAnimation.timePassed < 1000) {
-            drawAnimation();
-        } else {
-            flyAnimation.isPlaying = false;
-        }
-    }
+//     if (flyAnimation.isPlaying === true) {
+//         flyAnimation.timePassed = millis() - flyAnimation.startTime;
+//         if (flyAnimation.timePassed < 1000) {
+//             drawAnimation();
+//         } else {
+//             flyAnimation.isPlaying = false;
+//         }
+//     }
 
-    if (flyCaught.isPlaying === true) {
-        flyCaught.timePassed = millis() - flyCaught.startTime;
-        if (flyCaught.timePassed < 1000) {
-            drawCaughtFly();
-        } else {
-            flyCaught.isPlaying = false;
-        }
-    }
+//     if (flyCaught.isPlaying === true) {
+//         flyCaught.timePassed = millis() - flyCaught.startTime;
+//         if (flyCaught.timePassed < 1000) {
+//             drawCaughtFly();
+//         } else {
+//             flyCaught.isPlaying = false;
+//         }
+//     }
 
 
 
@@ -133,8 +133,9 @@ moveYellowEllipse();
 function preload() {
     caughtFlyImage = loadImage("assets/images/flyPanic.png");
     endingImage = loadImage("assets/images/Monster.png");
-    animationImage = loadImage("assets/images/clown.png");
-    flyCaughtImage = loadImage ("assets/images/Monster.png");
+    animationImage = loadImage("assets/images/Fly_02.gif");
+    flyCaughtImage = loadImage ("assets/images/Monster.gif");
+    BeeDropImage = loadImage ("assets/images/BeeDrop.gif");
 }
 
 /**
@@ -186,9 +187,10 @@ function title() {
 //this funciton is to set up ALL THE NEW VARIABLES for the level two
  function setupLevel2(){
     text ("setupLevel Two", width /2, height /2);
-    fly.velocity.x *= 2
+    fly.velocity.x = 2
     backgroundColor = "blue"
-    level = "Two"
+    level = "Two";
+    frog.flysEaten = 0;
  }
 
  
@@ -272,9 +274,9 @@ function levelOne (){
     }
 
 
-    moveYellowEllipse();
-    drawYellowEllipse();
-    checkFrogYellowEllipseCollision();
+    // moveYellowEllipse();
+    // drawYellowEllipse();
+    // checkFrogYellowEllipseCollision();
 
     if (flyAnimation.isPlaying === true) {
         flyAnimation.timePassed = millis() - flyAnimation.startTime;
@@ -347,8 +349,8 @@ function moveFly() {
     let speedVariation = 3;
     let d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y)
     if (d < fly.fearDistance) {
-        buzziness = .2;
-        speedVariation = 50;
+        buzziness = 1.5;
+        speedVariation = 5;
 
     }
 
@@ -382,7 +384,7 @@ function drawFly() {
  */
 function resetFly() {
     fly.x = 0;
-    fly.y = random(0, 300);
+    fly.y = random(100, 300);
 }
 
 function moveYellowEllipse() {
@@ -418,11 +420,11 @@ let buzziness = .1;
 
         //Spawn Yellow Ellipse
     } else {
-        if (random() < 0.01) {
+       // if (random() < 0.01) {
             yellowEllipse.isActive = true;
             yellowEllipse.x = random(0, width);
             yellowEllipse.y = -yellowEllipse.size;
-        }
+      //  }
     }
 }
 
@@ -431,7 +433,9 @@ function drawYellowEllipse() {
         push();
         noStroke();
         fill("#ffff00");
-        ellipse(yellowEllipse.x, yellowEllipse.y, yellowEllipse.size);
+       // ellipse(yellowEllipse.x, yellowEllipse.y, yellowEllipse.size);
+        BeeDropImage.resize (yellowEllipse.size, yellowEllipse.size);
+        image (BeeDropImage, yellowEllipse.x, yellowEllipse.y);
         pop();
     }
 }
@@ -536,12 +540,16 @@ function checkTongueFlyOverlap() {
 
     // Get distance from tongue to fly
     const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
-
+    console.log (fly.velocity.x)
     // Check if it's an overlap
     const eaten = (d < frog.tongue.size / 2 + fly.size / 2);
     if (eaten) {
         flyEaten = true;
-        fly.velocity.x = fly.velocity.x + .5;
+       console.log ("eaten")
+        if (fly.velocity.x < 5){
+            fly.velocity.x = fly.velocity.x + .25;
+        }
+        
         frog.flysEaten += 1;
         if (flyAnimation.isPlaying===false){
             flyAnimation.isPlaying = true;
@@ -554,10 +562,15 @@ function checkTongueFlyOverlap() {
         
 
         //on the (4th) fly, go to the ending screen and end the game.  
-        if (frog.flysEaten >= 1) {
+        if (frog.flysEaten >= 5 && level === "One") {
             //state = "ending"
             level = "setupTwo"
+        }  
+         if (frog.flysEaten >= 4 && level === "Two") {
+            state = "ending"
+           // level = "setupTwo"
         }
+
 
         // Reset the fly
         resetFly();
@@ -588,6 +601,9 @@ function resetGame() {
     frog.tongue.y = 480;
     frog.tongue.speed = frog.tongue.defaultSpeed;
     frog.flysEaten = 0;
+    fly.velocity.x = 1;
+    fly.velocity.y = 10;
+    
 
     resetFly();
     resetYellowEllipse();
@@ -599,4 +615,5 @@ function resetGame() {
     level = "One";
     state = "title";
     console.log("Game reset!");
+    backgroundColor = "#87ceeb"
 }
