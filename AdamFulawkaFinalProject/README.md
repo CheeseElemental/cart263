@@ -1,7 +1,7 @@
 # Flymonade
 Adam Fulawka
 
-## Play the game at:  https://cheeseelemental.github.io/cart263/AdamFulawkaFinalProject/
+## Play the game at:  https://cheeseelemental.github.io/cart253/frogfrogfrog_02/
 
 ## Descripton  
 A game about eating flies and destroying the lives of their fly families and fly communities.
