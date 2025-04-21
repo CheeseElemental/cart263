@@ -1,6 +1,5 @@
 /**
- * Frogfrogfrog
- * Pippin Barr
+ * Flymonade
  * 
  * A game of catching flies with your frog-tongue
  * 
@@ -8,7 +7,7 @@
  * - Move the frog with your mouse
  * - Repeatedly Click the mouse to try to grab a fly
  * - The flies will start to panic and try to avoid your tounge.
- * - Reload the page to play again
+ * - Watch out for level two where the bees ally with flies and try to kill you
  * 
  /** A game about eating flies and destroying the lives of their 
   * fly families and fly communities.

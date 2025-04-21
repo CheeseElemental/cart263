@@ -1,7 +1,14 @@
 # Flymonade
 Adam Fulawka
 
-## Play the game at:  https://cheeseelemental.github.io/cart253/frogfrogfrog_02/
+## How to play
+I can't remember how to publish a github page, so please download the project files. Sorry!
+
+ * Instructions:
+ * Move the frog with your mouse
+ * Repeatedly Click the mouse to try to grab a fly
+ * The flies will start to panic and try to avoid your tounge.
+ * Watch out for level two where the bees ally with flies and try to kill you
 
 ## Descripton  
 A game about eating flies and destroying the lives of their fly families and fly communities.
@@ -10,8 +17,8 @@ A game about eating flies and destroying the lives of their fly families and fly
 This project uses [p5.js](https://p5js.org).
 
 ## Attribution
-Lightly modified code from Professor Pippin Barr
-Expertise provided by Professor Barr, Bianca, Kiana, Mathilde and many others who's last names I don't know.
+Modified code from Professor Pippin Barr 
+Expertise provided by Sabine, Mathilde, Ajeetpal Sighn and many others who's last names I don't know.
  
 
 
